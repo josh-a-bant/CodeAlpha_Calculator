@@ -1,5 +1,3 @@
-console.log("hello jaan");
-
 let buttons = [
   "7",
   "8",
@@ -24,16 +22,33 @@ let buttonsComponent = document.getElementById("buttons");
 let equation = "";
 
 let handleClick = (e) => {
-  equation += e.target.innerText;
-  display.value = equation;
-  // console.log(equation);
-};
+  if (e.target.innerText === "C") {
+    equation = "";
+  } else if (e.target.innerText === "=") {
+    let result = eval(equation);
+    equation = result;
+  } else {
+    equation += e.target.innerText;
+  }
 
-// console.log(buttonsComponent);
+  display.value = equation;
+};
 
 buttons.forEach((element) => {
   let buttonElement = document.createElement("button");
-  buttonElement.classList.add("clear-display");
+
+  if (element === "C") {
+    buttonElement.classList.add("clear-display");
+  } else if (
+    element === "+" ||
+    element === "-" ||
+    element === "*" ||
+    element === "/" ||
+    element === "="
+  ) {
+    buttonElement.classList.add("operational-button");
+  }
+
   buttonElement.addEventListener("click", handleClick);
   buttonElement.innerText = element;
   buttonsComponent.append(buttonElement);
